@@ -26,7 +26,7 @@ Not a Duck... 	a Dog
 Not a Duck... 	a Dog
 Quack!
 A Duck!
->>> duck.mani(41)
+>>> duck.main(41)
 ...
 
 
@@ -37,31 +37,39 @@ What it does:
 - if not, it's not a duck!
 """
 
-class Duck:
+class Named:
+    """ 
+    class's string representation is its name,
+    all the animal classes inherit from this class so that their name is properly displayed!
+    """
+    def __repr__(self):
+        return self.__class__.__name__
+    
+class Duck(Named):
     """ a Duck quacks
     """
     def quack(self):
         print("Quack!")
 
-class Dog:
+class Dog(Named):
     """ a Dog barks
     """
     def bark(self):
         print("Woof!")
 
-class Cat:
+class Cat(Named):
     """ a Cat meows
     """
     def meow(self):
         print("Meow!")
 
-class Cow:
+class Cow(Named):
     """ a Cow moos
     """
     def moo(self):
         print("Mooo!")
 
-class Donkey:
+class Donkey(Named):
     """ a Donkey honks
     """
     def honk(self):
@@ -86,7 +94,7 @@ def main(nbAnimals = 10):
         purpose, and is not needed in real life applications.
     """
     import random,inspect,sys
-    classStringLis = [c[0]  for c in inspect.getmembers(sys.modules[__name__], inspect.isclass)]
+    classStringLis = [c[0]  for c in inspect.getmembers(sys.modules[__name__], inspect.isclass) if c[0] !='Named']
 
     random.seed()
     animalInstanceList = []
@@ -96,9 +104,10 @@ def main(nbAnimals = 10):
     for animal in animalInstanceList:
         try:
             animal.quack()
-            print('A Duck!')
+            print('A ',animal,'!')
+            #print('A Duck!')
         except:
-            print('Not a Duck... \ta', str(type(animal)).split('.')[-1].split("'")[0])
+            print('Not a Duck... \ta', animal) 
     
 if __name__ == "__main__":
     # execute only if run as a script
